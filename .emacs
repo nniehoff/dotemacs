@@ -1,7 +1,7 @@
 ;;;;;;;;;;
 ; Header ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; ben.abernathy's .emacs                                                       ;
+; nick.niehoff's .emacs                                                       ;
 ;                                                                              ;
 ; My living, breathing .emacs                                                  ;
 ; Perfection is an elusive, mythical creature that I have yet to catch.        ;
@@ -14,7 +14,7 @@
 ;;;;;;;;;;;
 ; License ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;   Copyright 2013 Benjamin Abernathy                                          ;
+;   Copyright 2017  Nick Niehoff                                               ;
 ;                                                                              ;
 ;   Licensed under the Apache License, Version 2.0 (the "License");            ;
 ;   you may not use this file except in compliance with the License.           ;
@@ -57,7 +57,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ; Load personal functions
-(load "~/.elisp/myfuncs.el")
+(load "~/dotemacs/.elisp/myfuncs.el")
 
 ; Set text-mode as the default major mode
 (setq-default major-mode 'text-mode)
@@ -71,7 +71,7 @@
 
 ; Set the default directory (this may need to be changed based b/c of os)
 (setq default-directory 
-      (if (getenv "HOME") (getenv "HOME") "/Users/ben.abernathy"))
+      (if (getenv "HOME") (getenv "HOME") "~/"))
 
 ; Highlights the current line
 (global-hl-line-mode 1)
@@ -83,7 +83,8 @@
 (setq bar-cursor nil)
 
 ; Turn off the toolbar
-(tool-bar-mode 0)
+(if window-system
+    (tool-bar-mode 0))
 
 ; Force the font lock mode to true, this will enable syntax highlighting
 (global-font-lock-mode 1)
@@ -106,6 +107,14 @@
 ; Indentation and tab handling
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
+
+; Setup the emacs desktop
+(desktop-save-mode 1)
+
+; Due to a bug use different desktop files if you are in gui or console
+(if window-system
+    (setq desktop-base-file-name ".emacs-desktop.gui")
+  (setq desktop-base-file-name ".emacs-desktop.console"))
 
 ; Highlight matching parenthesis
 (show-paren-mode 1)
@@ -136,20 +145,20 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ; Add the script directory
-(add-to-list 'load-path "~/.elisp")
+(add-to-list 'load-path "~/dotemacs/.elisp")
 
 ;; Enable SVN support
 (require 'psvn)
 
 ; Add Git support
-(add-to-list 'load-path "~/.elisp/git")
+(add-to-list 'load-path "~/dotemacs/.elisp/git")
 (require 'git)
 (require 'git-blame)
 
 ;; For themes, I use the color-theme package.
 ;; http://www.nongnu.org/color-theme
 ;; http://www.emacswiki.org/emacs/ColorTheme
-(add-to-list 'load-path "~/.elisp/color-theme-6.6.0")
+(add-to-list 'load-path "~/dotemacs/.elisp/color-theme-6.6.0")
 (require 'color-theme)
 (eval-after-load "color-theme"
   '(progn
@@ -171,9 +180,9 @@
 ;(add-hook 'text-mode-hook 'table-recognize)
 
 ; A cool template capability
-(load "~/.elisp/defaultcontent/defaultcontent.el")
+(load "~/dotemacs/.elisp/defaultcontent/defaultcontent.el")
 (require 'defaultcontent)
-(setq dc-auto-insert-directory "~/.elisp/defaultcontent/templates/")
+(setq dc-auto-insert-directory "~/dotemacs/.elisp/defaultcontent/templates/")
 (setq dc-fast-variable-handling t)
 
 ; Add templates here
@@ -184,11 +193,11 @@
 
 ; For auto completion within a buffer.
 (require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories "~/.elisp/ac-dict")
+(add-to-list 'ac-dictionary-directories "~/dotemacs/.elisp/ac-dict")
 (ac-config-default)
 
 ; Org mode!!!
-(setq load-path (cons "~/.elisp/org-7.8.03/lisp" load-path))
+(setq load-path (cons "~/dotemacs/.elisp/org-7.8.03/lisp" load-path))
 (require 'org-install)
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 (global-set-key "\C-cl" 'org-store-link)
@@ -233,8 +242,25 @@
 (provide 'semantic-load)
 
 ; A simple directory/source navigation tool 
-(add-to-list 'load-path "~/.elisp/emacs-nav-49")
+(add-to-list 'load-path "~/dotemacs/.elisp/emacs-nav-49")
 (require 'nav)
 (nav-disable-overeager-window-splitting)
 ;; Optional: set up a quick key to toggle nav
 (global-set-key [f8] 'nav-toggle)
+
+; Set up Auto Complete
+(require 'package)
+;; If you want to use last tagged version
+(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
+; Initialize package.el
+(package-initialize)
+
+(require 'auto-complete)
+(require 'auto-complete-config)
+(ac-config-default)
+
+(add-to-list 'load-path
+              "~/dotemacs/plugins/yasnippet")
+(require 'yasnippet)
+(yas-global-mode 1)
+
