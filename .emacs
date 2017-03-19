@@ -1,7 +1,7 @@
 ;;;;;;;;;;
 ; Header ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; nick.niehoff's .emacs                                                       ;
+; nick.niehoff's .emacs                                                        ;
 ;                                                                              ;
 ; My living, breathing .emacs                                                  ;
 ; Perfection is an elusive, mythical creature that I have yet to catch.        ;
