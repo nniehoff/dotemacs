@@ -309,3 +309,7 @@
 ; turn on automatic reparsing of open buffers in semantic
 (global-semantic-idle-scheduler-mode 1)
 
+; load bash completion
+(require 'bash-completion)
+(bash-completion-setup)
+
