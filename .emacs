@@ -108,13 +108,13 @@
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 
-; Setup the emacs desktop
-(desktop-save-mode 1)
+; Setup the emacs desktop This is a PITA
+; (desktop-save-mode 1)
 
 ; Due to a bug use different desktop files if you are in gui or console
-(if window-system
-    (setq desktop-base-file-name ".emacs-desktop.gui")
-  (setq desktop-base-file-name ".emacs-desktop.console"))
+;(if window-system
+;    (setq desktop-base-file-name ".emacs-desktop.gui")
+;  (setq desktop-base-file-name ".emacs-desktop.console"))
 
 ; Highlight matching parenthesis
 (show-paren-mode 1)
@@ -313,3 +313,15 @@
 (require 'bash-completion)
 (bash-completion-setup)
 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages (quote (json-mode))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
